@@ -6,7 +6,7 @@ import {
   setSizes,
   setPrice,
   resetFilters,
-} from "../../productSlice";
+} from "../../filtersSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const Aside = () => {
@@ -14,8 +14,8 @@ export const Aside = () => {
   const brands = ["nike", "adidas", "mokshi"];
   const sizes = ["S", "M", "L"];
   const dispatch = useDispatch();
-  const sizeArray = useSelector((store) => store.products?.sizes);
-  const price = useSelector((store) => store.products?.price);
+  const {sizes:sizeArray,price,category:categoryArray,brands:brandArray} =  useSelector((store) => store.filters);
+
   return (
     <div className="aside-container">
       <div className="filter-text">
@@ -32,6 +32,7 @@ export const Aside = () => {
                 name="category"
                 id={category}
                 value={category}
+                checked={categoryArray.includes(category)}
                 onChange={(e) => dispatch(setCategory(e.target.value))}
               />
               <label htmlFor={category}>{category.toUpperCase()}</label>
@@ -48,6 +49,7 @@ export const Aside = () => {
                 name="brand"
                 id={brand}
                 value={brand}
+                checked={brandArray.includes(brand)}
                 onChange={(e) => dispatch(setBrand(e.target.value))}
               />
               <label htmlFor={brand}>{brand.toUpperCase()}</label>
@@ -64,6 +66,7 @@ export const Aside = () => {
                 name="size"
                 id={size}
                 value={size}
+                checked={sizeArray.includes(size)}
                 onChange={(e) => dispatch(setSizes(e.target.value))}
               />
               <label htmlFor={size}>{size}</label>
@@ -77,7 +80,7 @@ export const Aside = () => {
           id="low-to-high"
           checked={price === "low-to-high"}
           value="low-to-high"
-          onClick={(e) => dispatch(setPrice(e.target.value))}
+          onChange={(e) => dispatch(setPrice(e.target.value))}
         />
         <label htmlFor="low-to-high">Low to High</label>
         <input
@@ -85,7 +88,7 @@ export const Aside = () => {
           name="price"
           id="High-to-low"
           checked={price === "high-to-low"}
-          onClick={() => dispatch(setPrice("high-to-low"))}
+          onChange={() => dispatch(setPrice("high-to-low"))}
         />
         <label htmlFor="High-to-low">High to Low</label>
       </div>
