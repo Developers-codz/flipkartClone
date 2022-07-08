@@ -1,0 +1,9 @@
+.main-wrapper{
+    grid-area: main;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    height: inherit;
+    background-color:white !important;
+}
